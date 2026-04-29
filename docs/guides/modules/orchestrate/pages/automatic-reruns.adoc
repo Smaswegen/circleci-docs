@@ -1,5 +1,5 @@
 = Automatic reruns
-:page-platform: Cloud
+:page-platform: Cloud, Server v4.9+
 :page-description: Configure automatic reruns for failed workflows to reduce manual intervention and improve pipeline reliability
 :experimental:
 
@@ -89,7 +89,7 @@ workflows:
             - test
 ----
 
-You can combine automatic reruns with workflow conditions. The following example shows how to configure automatic reruns for a workflow that is not triggered by a scheduled pipeline:
+You can combine automatic reruns with workflow conditions. The following example shows how to configure automatic reruns for a workflow that is not triggered by a schedule trigger:
 
 .Combining automatic reruns with workflow conditions
 [source,yaml]

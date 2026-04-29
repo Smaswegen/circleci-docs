@@ -7,6 +7,12 @@
   padding: 0 1rem 4rem;
 }
 
+@media screen and (max-width: 1023.5px) {
+  .doc {
+    padding: 0 32px 4rem;
+  }
+}
+
 @media screen and (min-width: 1024px) {
   .doc {
     flex: auto;
@@ -23,6 +29,20 @@
     flex: 1 1 0%;
     width: 0; /* Force flexbox to ignore content width */
     max-width: var(--doc-max-width--desktop); /* Restore max-width for centering */
+    transition: max-width 0.3s ease;
+  }
+}
+
+/* Article expansion when TOC collapses */
+@media screen and (min-width: 1200px) {
+  body.toc-collapsed .doc {
+    max-width: calc(var(--doc-max-width--desktop) + var(--toc-width) - 50px);
+  }
+}
+
+@media screen and (min-width: 1600px) {
+  body.toc-collapsed .doc {
+    max-width: calc(var(--doc-max-width--desktop) + var(--toc-width--widescreen) - 50px);
   }
 }
 
@@ -73,10 +93,12 @@
 
   .doc h2 {
     font-size: 20px;
+    margin-bottom: 24px;
   }
 
   .doc h3 {
     font-size: 18px;
+    margin-top: 20px;
   }
 
   .doc h4 {
@@ -86,8 +108,16 @@
 
 /* Special case: Page title gets extra top margin on larger screens */
 @media screen and (min-width: 768px) {
-  .doc > h1.page:first-child {
-    margin-top: 2.5rem;
+  .doc h1.page {
+    margin-top: calc(40 / var(--rem-base) * 1rem); /* 40px */
+    margin-bottom: calc(32 / var(--rem-base) * 1rem); /* 32px */
+  }
+
+  /* Section headings should have 40px top margin */
+  .doc h2,
+  .doc h3,
+  .doc h4 {
+    margin-top: calc(40 / var(--rem-base) * 1rem); /* 40px */
   }
 }
 
@@ -154,7 +184,7 @@
 }
 
 .doc a:hover {
-  color: var(--link_hover-font-color);
+  color: var(--link-hover-font-color);
 }
 
 .doc a.bare {
@@ -162,7 +192,7 @@
 }
 
 .doc a.unresolved {
-  color: var(--link_unresolved-font-color);
+  color: var(--link-unresolved-font-color);
 }
 
 .doc i.fa {
@@ -183,14 +213,13 @@
 .doc p code,
 .doc thead code,
 .doc .colist > table code,
-.doc .admonitionblock td.content code {
+.doc .admonitionblock td.content code:not(.hljs) {
   color: var(--code-font-color);
-  background: #F7F7F7;
+  background: var(--inline-code-background);
   border-radius: 4px;
-  border: 1px solid #D4D4D4;
+  border: 1px solid var(--inline-code-border-color);
   font-size: 0.95em;
-  padding: 0.15em 0.4em;
-  white-space: nowrap;
+  padding: 2px 8px;
 }
 
 .doc code,
@@ -219,7 +248,7 @@
   height: auto;
   margin: 0 0 1rem 1rem;
   border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--image-shadow);
   overflow: hidden;
 }
 
@@ -297,6 +326,14 @@
   margin: 1rem 0 0;
 }
 
+.doc .openblock.tabs {
+  margin-top: calc(40 / var(--rem-base) * 1rem);
+}
+
+.doc .imageblock {
+  margin-top: calc(40 / var(--rem-base) * 1rem);
+}
+
 .doc > table.tableblock,
 .doc > table.tableblock + *,
 .doc .tablecontainer,
@@ -313,7 +350,7 @@
   border-spacing: 0;
   display: table;
   margin-bottom: 1rem;
-  border: 1px solid #D4D4D4;
+  border: 1px solid var(--table-border-color);
   border-radius: 8px;
   overflow: hidden;
 }
@@ -331,18 +368,12 @@
 .doc table.tableblock th {
   box-sizing: border-box;
   white-space: normal;
-  word-wrap: break-word;
-}
-
-/* Allow wrapping of inline literal text in tables */
-.doc table.tableblock td code,
-.doc table.tableblock th code {
-  white-space: normal;
-  word-break: break-all;
+  overflow-wrap: break-word;
+  hyphens: manual;
 }
 
 .doc td.tableblock > .content {
-  word-wrap: anywhere; /* aka overflow-wrap; used when hyphens are disabled or aren't sufficient */
+  overflow-wrap: anywhere; /* aka overflow-wrap; used when hyphens are disabled or aren't sufficient */
 }
 
 .doc td.tableblock > .content > :first-child {
@@ -351,13 +382,22 @@
 
 .doc table.tableblock th,
 .doc table.tableblock td {
-  padding: 0.5rem;
-  border-bottom: 1px solid #D4D4D4;
+  padding: 1rem;
+  border-bottom: 1px solid var(--table-border-color);
+  min-width: 100px;
+}
+
+.doc table.tableblock th {
+  font-size: 18px;
+}
+
+.doc table.tableblock td {
+  font-size: 16px;
 }
 
 .doc table.tableblock,
 .doc table.tableblock > * > tr:last-child > * {
-  border-bottom: 1px solid #D4D4D4;
+  border-bottom: 1px solid var(--table-border-color);
 }
 
 .doc .table-scroll {
@@ -372,7 +412,7 @@
 
 .doc table.grid-all > * > tr > * {
   border-width: 0;
-  border-bottom: 1px solid #D4D4D4;
+  border-bottom: 1px solid var(--table-border-color);
 }
 
 .doc table.grid-cols > * > tr > * {
@@ -381,7 +421,7 @@
 
 .doc table.grid-rows > * > tr > * {
   border-width: 0;
-  border-bottom: 1px solid #D4D4D4;
+  border-bottom: 1px solid var(--table-border-color);
 }
 
 .doc table.grid-all > thead th,
@@ -439,11 +479,11 @@
 }
 
 .doc table.tableblock > tbody > tr:nth-of-type(odd) {
-  background: white;
+  background: var(--table-stripe-odd);
 }
 
 .doc table.tableblock > tbody > tr:nth-of-type(even) {
-  background: #FAFAFA;
+  background: var(--table-stripe-even);
 }
 
 .doc table.stripes-hover > tbody > tr:hover {
@@ -452,8 +492,8 @@
 
 .doc table.tableblock > thead > tr > th {
   font-weight: bold;
-  border-bottom: 2px solid #D4D4D4;
-  background-color: #FAFAFA;
+  border-bottom: 2px solid var(--table-border-color);
+  background-color: var(--table-header-background);
 }
 
 .doc table.tableblock > tfoot {
@@ -493,7 +533,7 @@
   display: flex !important;
   align-items: center;
   border: 2px solid transparent;
-  border-radius: 8px;
+  border-radius: 12px;
   padding: 1rem;
   box-sizing: border-box;
   padding: 1rem 1rem 0.75rem;
@@ -507,23 +547,23 @@
 }
 
 .doc .admonitionblock.note > table {
-  border-color: #1A66F7;
+  border-color: var(--note-color);
 }
 
 .doc .admonitionblock.tip > table {
-  border-color: #697387;
+  border-color: var(--tip-color);
 }
 
 .doc .admonitionblock.warning > table {
-  border-color: #BF8532;
+  border-color: var(--warning-color);
 }
 
 .doc .admonitionblock.important > table {
-  border-color: #CC4242;
+  border-color: var(--important-color);
 }
 
 .doc .admonitionblock.caution > table {
-  border-color: #CC4242;
+  border-color: var(--caution-color);
 }
 
 .doc .admonitionblock td.icon {
@@ -578,7 +618,8 @@
 
 .doc .admonitionblock td.content {
   width: 100%;
-  word-wrap: anywhere;
+  overflow-wrap: anywhere;
+  min-width: 0;
 }
 
 .doc .imageblock,
@@ -625,8 +666,8 @@
   width: auto;
   vertical-align: middle;
   object-fit: contain;
-  border: 1px solid #D4D4D4;
-  border-radius: 8px;
+  border: 1px solid var(--table-border-color);
+  border-radius: 12px;
 }
 
 /* Remove border for images with no-border class */
@@ -925,11 +966,16 @@
   display: flex !important;
   align-items: center;
   border: 2px solid transparent;
-  border-radius: 8px;
-  border-color: #1A66F7;
+  border-radius: 12px;
+  border-color: var(--note-color);
   padding: 1rem;
   box-sizing: border-box;
   padding: 1rem 1rem 0.75rem;
+}
+
+.doc .sidebarblock > .content {
+  min-width: 0;
+  width: 100%;
 }
 
 .doc .sidebarblock > .content > .title {
@@ -945,26 +991,12 @@
   margin-top: 0;
 }
 
-/* Fix wrapping issues inside sidebarblocks */
-.doc .sidebarblock code {
-  white-space: normal;
-  word-break: break-word;
-  overflow-wrap: break-word;
-}
-
-.doc .sidebarblock .listingblock pre {
-  white-space: pre-wrap;
-  word-break: break-word;
-  overflow-wrap: break-word;
-}
-
 .doc .sidebarblock .listingblock {
   width: 100%;
   max-width: 100%;
 }
 
 /* NEEDS REVIEW prevent pre in table from causing article to exceed bounds */
-.doc table.tableblock pre,
 .doc .listingblock.wrap pre {
   white-space: pre-wrap;
 }
@@ -978,14 +1010,9 @@
   overflow-x: auto;
   padding: 0.875em;
   border-radius: inherit;
-  color: #FFFFFF;
+  color: var(--color-white);
   max-width: 100%;
   box-sizing: border-box;
-}
-
-/* Hide line numbers for code blocks with role="no-numbers" */
-.doc .no-numbers .hljs-ln-numbers {
-  display: none !important;
 }
 
 /* Remove border from code block table cells when inside regular tables */
@@ -1002,13 +1029,14 @@
 /* Style listing blocks with titles */
 .doc .listingblock > .title {
   background: var(--pre-title-background);
-  border-radius: 8px 8px 0 0;
+  border-radius: 12px 12px 0 0;
   padding: 0.5em 0.875em;
   margin-bottom: 0;
   position: relative;
   padding-left: 2em; /* Add space for the SVG */
   cursor: pointer; /* Indicate clickable */
   transition: border-radius 0.3s ease;
+  font-style: normal; /* Override italic style from caption */
 }
 
 /* Add the arrow-down SVG after the title */
@@ -1031,17 +1059,17 @@
 
 /* When title is collapsed, adjust the border radius */
 .doc .listingblock > .title.collapsed {
-  border-radius: 8px;
+  border-radius: 12px;
 }
 
 /* When a title is present, adjust the code block border radius */
 .doc .listingblock > .title + .content pre {
-  border-radius: 0 0 8px 8px;
+  border-radius: 0 0 12px 12px;
 }
 
-/* When title is not present, use border-radius: 8px for code blocks */
+/* When title is not present, use border-radius: 12px for code blocks */
 .doc .listingblock > .content pre {
-  border-radius: 8px;
+  border-radius: 12px;
 }
 
 /* Keep existing position relative for the content */
@@ -1054,7 +1082,7 @@
   flex-direction: column;
   align-items: center;
   position: absolute;
-  top: 0.25rem;
+  top: 0.5rem;
   right: 0.5rem;
   color: var(--pre-annotation-font-color);
   font-family: var(--body-font-family);
@@ -1101,7 +1129,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #E8E8E8;
+  background-color: var(--code-comment-color);
   border: none;
   border-radius: 50%;
   color: inherit;
@@ -1321,7 +1349,7 @@
 
 .doc .nobreak {
   hyphens: none;
-  word-wrap: normal;
+  overflow-wrap: normal;
 }
 
 .doc :not(pre).pre-wrap {
@@ -1368,12 +1396,12 @@
 .doc dl,
 .doc table {
   margin: 0 0 1rem;
-  font-weight: 300;
+  font-weight: 400;
 }
 
 /* inline links pick up the new blue */
 .doc a {
-  color: #2152E5;
+  color: var(--link-font-color);
 }
 
 /* Image Modal Styles */
@@ -1384,7 +1412,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.85);
+  background-color: var(--modal-overlay-background);
   z-index: 9999;
   overflow: auto;
   justify-content: center;
@@ -1409,7 +1437,7 @@
 }
 
 .image-modal-title {
-  color: #fff;
+  color: var(--color-white);
   margin-top: 1rem;
   font-size: 1rem;
   text-align: center;
@@ -1432,22 +1460,174 @@
 }
 
 .doc .circle-green {
-  color: #008542 !important;
+  color: var(--link-success-color) !important;
   font-weight: var(--heading-font-weight);
 }
 
 .doc .circle-red {
-  color: #8F001C !important;
+  color: var(--link-error-color) !important;
   font-weight: var(--heading-font-weight);
 }
 
-/* Prevent code text from wrapping in table cells */
-td .pre,
-td .code,
-td code,
-td pre,
-td .tableblock code,
-td p code,
-.tableblock code {
-  white-space: nowrap !important;
+/* Prevent inline code text from wrapping in table cells */
+.doc .tableblock code:not(.hljs) {
+  white-space: nowrap;
 }
+
+/* Ensure code blocks in tables preserve formatting */
+.doc .tableblock .listingblock pre,
+.doc .tableblock .listingblock code,
+.doc td .listingblock pre,
+.doc td .listingblock code {
+  white-space: pre !important;
+}
+
+/* === MERMAID DIAGRAM STYLES === */
+
+/* Basic container styling */
+.doc .mermaid {
+  text-align: center;
+  margin: 1rem 0;
+  overflow-x: auto;
+}
+
+/* Responsive sizing */
+.doc .mermaid svg {
+  max-width: 100%;
+  height: auto;
+  cursor: default; /* Prevent zoom cursor on hover */
+}
+
+/* Prevent zoom cursor on mermaid diagrams */
+.doc .mermaid,
+.doc .mermaid *,
+.doc .imageblock .mermaid,
+.doc .imageblock .mermaid *,
+.doc .imageblock .content .mermaid,
+.doc .imageblock .content .mermaid * {
+  cursor: default !important;
+}
+
+/* Specifically override the imageblock content zoom cursor when it contains mermaid */
+.doc .imageblock .content .mermaid ~ *,
+.doc .imageblock .content .mermaid + * {
+  cursor: default !important;
+}
+
+/* Platform Badge Tooltips - CircleCI Web App Style */
+:root {
+  --tooltip-max-width: 300;
+  --tooltip-bg-light: #293548;
+  --tooltip-text-light: #ffffff;
+  --tooltip-bg-dark: #E5E7EB;
+  --tooltip-text-dark: #293548;
+}
+
+.platform-badge {
+  position: relative;
+  cursor: default;
+}
+
+/* Light mode tooltip - dark background with white text */
+.platform-badge::before {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 10px 16px;
+  background: var(--tooltip-bg-light);
+  color: var(--tooltip-text-light);
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.4;
+  white-space: normal;
+  max-width: calc(var(--tooltip-max-width) * 1px);
+  width: max-content;
+  text-align: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.1s ease-in-out;
+  z-index: 1000;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Left-aligned tooltip for left edge */
+.platform-badge[style*="--tooltip-align: left"]::before {
+  left: 0;
+  transform: translateX(0);
+}
+
+.platform-badge[style*="--tooltip-align: left"]::after {
+  left: 20px;
+  transform: translateX(0);
+}
+
+/* Right-aligned tooltip for right edge */
+.platform-badge[style*="--tooltip-align: right"]::before {
+  left: auto;
+  right: 0;
+  transform: translateX(0);
+}
+
+.platform-badge[style*="--tooltip-align: right"]::after {
+  left: auto;
+  right: 20px;
+  transform: translateX(0);
+}
+
+/* Ensure tooltip stays within viewport on mobile */
+@media (max-width: 640px) {
+  .platform-badge::before {
+    max-width: 250px;
+  }
+}
+
+/* Dark mode tooltip - light background with dark text (inverted) */
+[data-theme="dark"] .platform-badge::before {
+  background: var(--tooltip-bg-dark);
+  color: var(--tooltip-text-dark);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Show tooltip only when visibility class is applied (after position calculated) */
+.platform-badge.tooltip-visible::before,
+.platform-badge.tooltip-visible::after {
+  opacity: 1;
+}
+
+/* Light mode arrow - dark color matching tooltip */
+.platform-badge::after {
+  content: '';
+  position: absolute;
+  bottom: calc(100% + 10px - 1px); /* Overlap with tooltip by 1px to hide gap */
+  left: 50%;
+  transform: translateX(-50%) translateY(50%);
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid var(--tooltip-bg-light); /* Points down */
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.05s ease-out; /* Faster than tooltip, appears first */
+  z-index: 999; /* Just below tooltip to render behind */
+}
+
+/* Dark mode arrow - light color matching inverted tooltip */
+[data-theme="dark"] .platform-badge::after {
+  border-top-color: var(--tooltip-bg-dark);
+}
+
+/* Focus outline for accessibility */
+.platform-badge:focus {
+  outline: 2px solid var(--tooltip-bg-light);
+  outline-offset: 2px;
+}
+
+[data-theme="dark"] .platform-badge:focus {
+  outline-color: var(--tooltip-bg-dark);
+}
+
+

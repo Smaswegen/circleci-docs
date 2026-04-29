@@ -1,10 +1,12 @@
+\b[Gg]it[Hh]ub organization\b
+\b[Cc]ircle[cC][iI] organization\b
+\b[Bb]itbucket organization\b
 .circleci/config.yml
 [Aa]gentless
+[Aa]gentic
 [Aa]uditability
 [Aa]utoscalers?
 [Bb]ooleans?
-\b[Cc]onfig policies\b
-\b[Cc]onfig policy\b
 [Cc]ron
 [Ee]nterprise
 [Gg]it
@@ -74,12 +76,14 @@ Buildx
 Bundler
 Capistrano
 Certbot
+Cest
 cgroup
 Chocolatey
 chruby
-CircleCI\b
-\bCircleCI cloud\b
-\bCircleCI server\b
+[Cc]hunk
+\bCircleCI\b
+\bCircleCI Cloud\b
+\bCircleCI Server\b
 \bcircleci\.com\b
 CI/CD
 CIDRs?
@@ -92,6 +96,7 @@ CLI
 Claude Code
 CMake
 CocoaPods
+Codeception
 Codecov
 CodeDeploy
 Coinbase
@@ -127,6 +132,7 @@ Docker\sHub
 Dockerfiles?
 dockerize
 [Dd]otfiles?
+ECMAscript
 [Ee]nablement
 EKS
 Elixir
@@ -142,7 +148,8 @@ FAQs?
 Fastfile
 Fastlane
 /bFastlane Match/b
-filename
+[Ff]ilename
+[Ff]ilepath
 framebuffer
 frameit
 \bFree Plan\b
@@ -153,6 +160,7 @@ geckodriver
 Gemfile
 GitHub
 \bGitHub Checks\b
+GitLab
 \bGitLab self-managed\b
 GKE
 \bGoogle Cloud\b
@@ -161,7 +169,8 @@ GKE
 \bGoogle Cloud Storage\b
 \bGoogle Container Registry\b
 \bGoogle Play Store\b
-GPU
+gotestsum
+GPUs?
 Gradle
 Grafana
 Gzip
@@ -237,15 +246,17 @@ Okta
 OOM
 OPA
 \bOpenID Connect\b
-orgs?
+[Oo]rgs?
 [Pp]ackagecloud
 [Pp]arameterization
 [Pp]arameterizable
+[Pp]arsable
 [Pp]assphraseless
 \bPerformance Plan\b
 PHP
 PHPUnit
 Pipenv
+[Pp]laintext
 Playwright
 Podfile
 PostgreSQL
@@ -266,7 +277,7 @@ PowerShell
 [Pp]roxied
 [Pp]roxying
 Pusher
-PVC
+PVCs?
 Python
 pytest
 RAM
@@ -279,6 +290,7 @@ ReplicaSet
 [Rr]epos?
 [Rr]eprovision
 [Rr]eprovisioned
+[Rr]etrigger
 [Rr]eusability
 Restic
 RHEL
@@ -312,6 +324,7 @@ SLAs?
 Slanger
 [Ss]ignup
 SKUs?
+Smarter Testing
 [Ss]nap
 SSH
 statsd
@@ -323,6 +336,7 @@ stdin
 [Ss]ubcommands?
 [Ss]ubnets?
 [Ss]ubnetworks?
+[Ss]ubpackage
 superset
 Sysbox
 systemd
@@ -336,6 +350,8 @@ Telegraf
 Terraform
 TestFairy
 \btime windows\b
+[Tt]imebox
+[Tt]imeboxing
 Tink
 Tinkey
 TLS
@@ -366,10 +382,13 @@ URLEncoder
 UUID
 UUIDs?
 [Vv]alidator
+values.yaml
+vCPUs?
 VCS
 Velero
 Viget
 [Vv]irtualized
+Vitest
 VMs?
 VPC
 \bVisual Studio\b
@@ -388,3 +407,4 @@ XCTest
 XQuartz
 Xvfb
 YAML
+Zstd

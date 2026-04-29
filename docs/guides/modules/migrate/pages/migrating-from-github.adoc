@@ -13,7 +13,7 @@ TIP: The link:https://circleci.com/developer/tools/configTranslator[CircleCI con
 [#jobs-and-workflows]
 === Jobs and workflows
 
-Both GitHub Actions and CircleCI share similar concepts around "jobs" and "workflows". A workflow is an end-to-end flow of connected jobs, which in turn consist of commands to achieve an atomic task (for example, "run unit tests" or "build a Docker image").
+Both GitHub Actions and CircleCI share similar concepts around "jobs" and "workflows". A workflow is an end-to-end flow of connected jobs. Jobs consist of commands to achieve an atomic task (for example, "run unit tests" or "build a Docker image").
 
 CircleCI differs primarily in configuration syntax, setting up workflow and job dependencies in a separate section as opposed to inline in the job.
 
@@ -24,7 +24,7 @@ CircleCI differs primarily in configuration syntax, setting up workflow and job 
 | GitHub | CircleCI
 
 a|
-[source,yaml,role="no-numbers"]
+[source,yaml]
 ----
 name: My GitHub Actions Workflow
 
@@ -43,7 +43,7 @@ jobs:
 ----
 
 a|
-[source,yaml,role="no-numbers"]
+[source,yaml]
 ----
 jobs:
   job_1:
@@ -63,6 +63,7 @@ workflows:
           requires:
             - job_1
 ----
+
 |===
 --
 
@@ -70,13 +71,13 @@ workflows:
 === Actions vs. orbs
 "Actions" in GitHub are reusable commands or tasks to run inside a job. However, they are written for execution inside a Docker container or coded as individual steps using JavaScript. This adds additional work and limits the scope in which they can be applied.
 
-CircleCI offers similar functionality in our xref:orbs:use:orb-intro.adoc[orbs]. The primary difference is that CircleCI orbs are just packaged, reusable YAML, so you can create orbs with reusable jobs, executors, or commands, and use them however you see fit in any of your jobs or workflows.
+CircleCI offers similar functionality in our xref:orbs:use:orb-intro.adoc[Orbs]. The primary difference is that CircleCI orbs are packaged, reusable YAML. You can create orbs with reusable jobs, executors, or commands, and use them in any of your jobs or workflows.
 
 GitHub offers browsing of Actions in their Marketplace; CircleCI has an https://circleci.com/developer/orbs[Orb Registry] as well as an https://circleci.com/integrations/[Integrations Page] containing numerous Certified, Partner, and community orbs / integrations.
 
 [#runners-vs-executors]
 === Runners vs. executors
-In GitHub, you can specify your builds to run in Linux, macOS, and Windows environments via a `runs-on` key in the YAML, and if you want to run anything in a container, you specify an additional `container` key.
+In GitHub, you can specify your builds to run in Linux, macOS, and Windows environments via a `runs-on` key in the YAML. If you want to run anything in a container, specify an additional `container` key.
 
 In CircleCI, you have the same choice of environments (called Executors), with additional options and features for Docker.
 
@@ -99,7 +100,7 @@ include::ROOT:partial$notes/docker-auth.adoc[]
 `docker` is its https://circleci.com/docs/configuration-reference/#docker-machine-macos-windows-executor[own class of executor] in CircleCI.
 
 a|
-[source,yaml,role="no-numbers"]
+[source,yaml]
 ----
 # Choosing an Operating System
 runs-on: ubuntu-latest # or windows, etc.
@@ -110,7 +111,7 @@ container:
 ----
 
 a|
-[source,yaml,role="no-numbers"]
+[source,yaml]
 ----
 # Docker (container) Executor
 docker:
@@ -133,7 +134,7 @@ resource_class: windows.medium # can be medium, large, xlarge, 2xlarge
 2+| Specifying dependencies/services. All images specified after the first in CircleCI are treated https://circleci.com/docs/configuration-reference/#docker[as dependencies].
 
 a|
-[source,yaml,role="no-numbers"]
+[source,yaml]
 ----
 jobs:
   build:
@@ -154,7 +155,7 @@ jobs:
 ----
 
 a|
-[source,yaml,role="no-numbers"]
+[source,yaml]
 ----
 jobs:
   build:
@@ -172,7 +173,7 @@ jobs:
 2+| Specifying steps to https://circleci.com/docs/configuration-reference/#run[run] in a job. Similar functionality, different syntax.
 
 a|
-[source,yaml,role="no-numbers"]
+[source,yaml]
 ----
 jobs:
   build:
@@ -184,7 +185,7 @@ jobs:
 ----
 
 a|
-[source,yaml,role="no-numbers"]
+[source,yaml]
 ----
 jobs:
   build:
@@ -200,7 +201,7 @@ jobs:
 and then https://circleci.com/docs/configuration-reference/#orbs[refer to them by name in config], similar in concept to Python or JavaScript imports.
 
 a|
-[source,yaml,role="no-numbers"]
+[source,yaml]
 ----
 jobs:
   build:
@@ -218,7 +219,7 @@ jobs:
 ----
 
 a|
-[source,yaml,role="no-numbers"]
+[source,yaml]
 ----
 orbs:
   slack-orb: circleci/slack@3.4.0
@@ -238,14 +239,14 @@ jobs:
 
 2+a| Using conditional steps in the workflow. CircleCI offers the following:
 
-* xref:reference:ROOT:configuration-reference.adoc#the-when-attribute[Basic conditions on steps, using the `when` attribute] (for example, `on_success` [default], +
+* xref:reference:ROOT:configuration-reference.adoc#the-when-attribute[The When Attribute] (for example, `on_success` [default], +
 `always`, `on_failure`).
 * https://circleci.com/docs/configuration-reference/#the-when-step[Conditional steps] based on parameters.
 * https://circleci.com/docs/reusing-config/#using-the-parameters-declaration[Conditional jobs].
-* Conditional, parameterized xref:orchestrate:workflows.adoc#use-conditional-logic-in-workflows[workflows].
+* Conditional, parameterized xref:orchestrate:workflows.adoc#use-conditional-logic-in-workflows[Workflows].
 
 a|
-[source,yaml,role="no-numbers"]
+[source,yaml]
 ----
 jobs:
   build:
@@ -261,7 +262,7 @@ jobs:
 ----
 
 a|
-[source,yaml,role="no-numbers"]
+[source,yaml]
 ----
 jobs:
   build:
@@ -282,9 +283,9 @@ jobs:
 
 For more configuration examples on CircleCI, visit our xref:toolkit:examples-and-guides-overview.adoc[Examples and Guides Overview] and xref:toolkit:example-configs.adoc[Example Projects] pages.
 
-Since the configuration between GitHub Actions and CircleCI is similar, it should be fairly trivial to migrate your jobs and workflows. However, for best chances of success, we recommend migrating over items in the following order:
+Since the configuration between GitHub Actions and CircleCI is similar, migrating your jobs and workflows is straightforward. For best chances of success, we recommend migrating over items in the following order:
 
 . xref:about-circleci:concepts.adoc[Jobs, Steps, and Workflows]
 . xref:orchestrate:workflows.adoc[More Advanced Workflow and Job Dependency Configuration]
 . xref:orbs:use:orb-intro.adoc[Actions to Orbs]. Our registry can be found https://circleci.com/developer/orbs?filterBy=all[here].
-. xref:optimize:optimizations.adoc[Optimizations like caching, workspaces, and parallelism]
+. xref:optimize:optimizations.adoc[Optimizations Like Caching, Workspaces, and Parallelism]
